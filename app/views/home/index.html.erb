@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="cloud">  
+    <% tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class| %>
+    <%= link_to tag.name, { :controller => :search, :action => :search, :topic => tag.name }, :class => css_class %>
+    <% end %>
+  </div>
+</div>
+
+<div class="searchbar">  
+  <%= form_tag '/search' do %>
+    <%= text_field_tag 'topic', '', :class=>'span6', :placeholder => 'search a recipe' %>
+    <%= submit_tag 'Search', :class => "btn-primary" %>
+  <% end %>
+</div>
+<hr class="soften"/>
+<div class="marketing">
+  <h1>Store and share your code recipes</h1>
+  <p class="marketing-byline">
+    and everithing you think is important
+  </p>
+  <div class="row">
+    <div class="span3">      
+      <h2><%= image_tag('briefcase.png') %> Organize your recipes</h2>
+      <p>flsdjflsjdlfsjdlfsjdlfjsdlfjsldfjlsdfjlsdjflsfdjl</p>
+    </div>
+    <div class="span3">
+      <h2><%= image_tag('share.png') %> Share your recipes</h2>
+      <p>flsdjflsjdlfsjdlfsjdlfjsdlfjsldfjlsdfjlsdjflsfdjl</p>
+    </div>
+    <div class="span3">
+      <h2><%= image_tag('search.png') %> Search code recipes</h2>
+      <p>flsdjflsjdlfsjdlfsjdlfjsdlfjsldfjlsdfjlsdjflsfdjl</p>
+    </div>
+    <div class="span3">
+      <h2><%= image_tag('group.png') %> Colaborate and share</h2>
+      <p>flsdjflsjdlfsjdlfsjdlfjsdlfjsldfjlsdfjlsdjflsfdjl</p>
+    </div>
+  </div>
+</div>  
+

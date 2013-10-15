@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>  
+<head>
+  <title>The Code Cookbook</title>
+  <link rel="shortcut icon" href="/images/icon.png"/>
+    <%= stylesheet_link_tag :all %>
+    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag "showdown.js"%>  
+    <%= javascript_include_tag "wmd.js"%>
+    <%= javascript_include_tag "chunk.js"%>
+    <%= javascript_include_tag "inputstate.js"%>
+    <%= javascript_include_tag "command.js"%>
+    <%= javascript_include_tag "dialog.js"%>
+    <%= javascript_include_tag "form.js"%>
+    <%= javascript_include_tag "field.js"%>
+    <%= javascript_include_tag "linkhelper.js"%>    
+    <%= javascript_include_tag "bootstrap_modal.js"%>
+    <%= javascript_include_tag "bootstrap_alert.js"%>
+    <%= csrf_meta_tag %>
+    <script type="text/javascript">
+      var uvOptions = {};
+      (function() {
+        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/EyH9dMeOtcAQfmZG3lVdg.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+      })();          
+    </script>
+    <script type="text/javascript">
+      $('#login').modal({
+          keyboard: true
+          })
+    </script>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        line-height: 18px;
+        color: #333333;
+        background-color: #FFFFFF;
+        padding-bottom: 40px;
+        padding-top: 0px;
+      }
+      
+      .navbar-inner {
+        background-color: #FFFFFF;
+        background-image: -moz-linear-gradient(center top , #FFFFFF, #FFFFFF);
+        background-repeat: repeat-x;
+        border-radius: 0px 0px 0px 0px;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, 0.25), 0 0px 0 rgba(0, 0, 0, 0.1) inset;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .marketing h1 {
+        font-size: 40px;
+        font-weight: 300;
+        margin: 36px 0 27px;
+        text-align: center;
+      }
+      
+      .marketing h2 {
+        font-size: 22px;
+        font-weight: 300;
+      }
+      
+      .marketing p {
+        margin-right: 10px;
+      }
+      
+      .marketing-byline {
+        color: #999999;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 24px;
+        margin: -18px 0 27px;
+        text-align: center;
+      }
+      .menu_right a{
+        color: white !important;
+      }
+      .navbar .nav > li > a {
+        float: none;
+        padding: 10px 20px 11px;
+        line-height: 19px;
+        color: #43240F;
+        /*color: #77C6EB;*/
+        text-decoration: none;
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0.25);
+        font-size: 16px;
+      }
+      .navbar .nav > li > a:hover {
+        background-color: transparent;
+        color: #43240F;
+        text-decoration: none;
+      }
+    </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">             
+        <div class="nav-collapse">
+          <ul class="nav pull-right">
+            <% if logged_in? %>
+              <li><%= link_to 'logout', logout_path %></li>
+              <li class="menu_right"><%= link_to current_user.login,  current_user%></li>
+            <% else %>
+              <li><%= link_to 'Login', login_path %></li>
+              <!--li><a data-toggle="modal" href="#login" >Login</a></li-->
+              <li class="menu_right"><%= link_to 'Join Us!', new_user_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container"> 
+    <div class="row">
+      <div class="span8 offset2">
+        <% if flash[:warning]%>
+          <div class="alert alert-block alert-error fade in">
+            <a class="close" href="#" data-dismiss="alert">×</a>          
+            <%= flash[:warning] %>
+          </div>          
+        <% end %>    
+        <% if flash[:notice] %>
+          <div class="alert alert-success fade in">
+            <a class="close" data-dismiss="alert">×</a>
+            <%= flash[:notice] %>
+          </div>          
+        <% end %> 
+        <% if flash[:error] %>
+          <div class="alert alert-block alert-error fade in">          
+            <a class="close" data-dismiss="alert">×</a>
+            <h4 class="alert-heading">You got an error!</h4>
+            <p>
+              <%= flash[:error] %>
+            </p>
+          </div>          
+        <% end %> 
+      </div>
+    </div>
+    <div class="row">
+      <center>
+        <%= link_to image_tag('thecodecookbook.png'), root_path %>
+      </center>       
+    </div>
+
+    <%= yield %>        
+  
+      <hr/>
+      
+      <footer>        
+        <div class="row-fluid footertext"> 
+          <center>
+            Site Design © 2012 thecodecookbook.com  <br/>         
+            Content under            
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">
+              <!--img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /-->
+              <img alt="Creative Commons License" style="border-width:0" src="/images/ico-cc.png" />
+            </a>
+            <br/> <br/> 
+            <a href="http://twitter.com/thecodecookbook" target="_blank">
+              <%=image_tag('twitter.png')%>
+            </a>
+            <a href="http://www.facebook.com/pages/thecodecookbook/140392706044050" target="_blank">
+              <%=image_tag('facebook.png')%>
+            </a>
+            <!--img alt="Creative Commons License" style="border-width:0" src="/images/twitter.png" />
+            <img alt="Creative Commons License" style="border-width:0" src="/images/facebook.png" /-->
+          </center>          
+      </footer>
+    </div>
+  </body>
+</html>
+

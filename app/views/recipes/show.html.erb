@@ -1,0 +1,62 @@
+<%#*<p id="notice"><%= notice %>
+<section class="main">
+  <div class="page-header">
+    <h1>
+      <%= @recipe.title %> 
+      <% if @recipe.is_draft %>
+        <span class="label label-important">draft</span>
+      <% end %>
+      <small>
+        <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+        <a href="javascript: window.history. back() "> Back </a>
+      </small>
+    </h1>
+    <br/>
+    <i class="icon-tags"></i> 		
+    <% @recipe.tags.each do |tag| %>
+      <span class="label label-info"><%= link_to tag.name, {:action => 'search', :controller => 'search' ,:topic => tag.name}%></span>
+    <% end %>	
+  </div>
+  <div class="row-fluid">
+    <div class="span12">
+	<%= raw @recipe.text %>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span12">
+      <br/>
+      <h4>
+          posted by <%= @recipe.user.login %> at <%= @recipe.create_at %> last update <%= @recipe.update_at %> 
+          <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+          <a href="javascript: window.history. back() "> Back </a>
+      </h4>
+      <hr/>  
+    </div>
+  </div>
+
+  <% @recipe.comments.each do |comment| %>
+    <div class="row-fluid"> 
+      <div class="span1">
+        <div class="thumbnail">
+          <%= image_tag comment.user.avatar.url(:minithumb) %>
+        </div>
+      </div>
+      <div class="span11">
+        <div class="alert alert-info">
+          <h4><%= link_to comment.user.login,  comment.user%> said at <%= comment.create_at%></h4> 
+          </br>
+          <%= raw comment.text%>
+        </div>				
+      </div>
+    </div>
+  <% end %>
+  <% if logged_in? %>
+    <%= render 'recipes/comment_form' %>          
+  <% else %>
+    <div class="row-fluid"> 
+      <div class="span12">
+        <%= link_to 'Login to add a comment', { :controller => :recipes, :action => :public_show, :id => @recipe.id } %>
+      </div>
+    </div>
+  <% end %>
+</section>

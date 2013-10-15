@@ -1,0 +1,100 @@
+<script type="text/javascript">
+	window.onload = function() {
+		new WMD("input", "toolbar", { preview: "preview" });
+	};
+</script>
+<script type="text/javascript">
+    function preview() {
+      document.getElementById('input').style.display = 'none';
+      var previewcontent = document.getElementById('preview').textContent;
+      document.getElementById('preview2').innerHTML=previewcontent;
+      document.getElementById('preview2').style.display = 'block';
+      document.getElementById('deditlink').className = '';
+      document.getElementById('previewlink').className = 'active';
+    }
+    
+    function edit() {
+      document.getElementById('input').style.display = 'block';
+      document.getElementById('preview2').style.display = 'none';
+      document.getElementById('deditlink').className = 'active';
+      document.getElementById('previewlink').className = '';
+    }
+</script>
+
+<div class="span8 main">
+    <div class="row">
+      <div class="span8">
+        <h1>Updating a recipe</h1>
+        <hr/> 
+      </div>      
+    </div>
+    <div class="row">
+        <div class="span8">
+          <%= form_for @recipe, :as => :recipe, :url => {:action => 'update'},
+                      :html => {:multipart => true}  do |f| %>
+
+            <% if @recipe.errors.any? %>
+              <div class="alert alert-block alert-error fade in">          
+                <a class="close" data-dismiss="alert">×</a>
+                <h2 class="alert-heading"><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+                  <ul>
+                    <% @recipe.errors.full_messages.each do |msg| %>
+                      <li><%= msg %></li>
+                    <% end %>
+                  </ul>
+              </div>
+            <% end %>
+
+            <div class="control-group">
+              <%= f.label :title %>
+              <%= f.text_field :title, :class => 'span8'%>
+            </div>
+          
+            <div class="control-group">
+              <%= f.label :text %>
+              <div id="toolbar" class="wmd-toolbar span4"></div>
+              <div class="span3">
+                <ul class="nav nav-pills">
+                  <li id="deditlink" class="active">
+                    <a href="#" onclick="edit()">edit</a>
+                  </li>
+                  <li id="previewlink">
+                    <a href="#" onclick="preview()">preview</a>
+                  </li>
+                </ul>
+              </div>
+              <%= f.text_area :marked_text, :id => "input", :class => "wmd-input recipe_input span8" %>
+              <%= f.text_area :text, :id => "preview", :class => "wmd-preview nodisplay span8" %>
+              <div class="row">
+                <div id="preview2" class="wmd-preview nodisplay preview span8"></div>
+              </div>              
+            </div> 
+                  
+            <div class="control-group">
+              <%= f.label :tag_list, "Tags" %>
+              <%= f.text_field :tag_list, :class => 'span8' %>
+              <p class="help-block">
+                (Add tags separated by ,)
+              </p> 
+            </div>
+            <div class="control-group">
+              <%= f.label :skill_list, "Skills" %>
+              <%= f.text_field :skill_list, :class => 'span8' %>
+            </div>	
+
+            <div class="control-group">
+              <label class="checkbox">
+                <%= f.check_box :is_draft %>Is a draft?
+              </label>	    	    
+            </div>
+            
+            <div class="form-actions">
+              <div class="offset5">
+                <a href="javascript: window.history. back()" class="btn btn-large"> Cancel </a>
+                <%= f.submit "Update", :class => 'btn btn-large btn-success'%>
+              </div>
+            </div>                                    
+        <% end %>        
+      </div>
+    </div>
+</div>

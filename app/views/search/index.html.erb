@@ -1,0 +1,52 @@
+<section class="main">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="row-fluid">
+        <div class="span8">
+          <h1>Search results: <small><%=  @recipes.total %>  Recipes found<!--%= page_entries_info @recipes %>--></small></h1>
+        </div>
+        <div class="span3">
+          <%= form_tag '/search' do %>
+            <%= text_field_tag "topic", '', :class=>'span3 search-query margintop10', :placeholder => 'new search'%>
+          <% end %>
+        </div>        
+      </div>
+      <hr/>
+    </div>
+  </div>
+  <% @recipes.each_hit_with_result do |hit, recipe| -%>
+  <div class="row-fluid">
+    <div class="span12">
+      <h2>
+        <%= link_to recipe.title, recipe %>
+        <% if recipe.is_draft%>
+          <span class="label label-important">draft</span>
+        <% end %> 
+      </h2>
+      <i class="icon-tags"></i>
+      <% recipe.tags.each do |tag| %>
+        <span class="label label-info"><%= link_to tag.name, {:action => 'search', :controller => 'search' ,:topic => tag.name} %></span>
+      <% end %>
+      <p>
+        <%if recipe.text[0,200].include? "<code>" %>
+          <%= raw recipe.text[0,200]%> </code></pre>...
+        <%  else %>
+          <%= raw recipe.text[0,200]%> ...
+        <%  end %>
+      </p>
+      <h4>
+        created by <%= link_to recipe.user.login, recipe.user %> at <%= recipe.create_at %>
+      </h4>
+      <hr/>
+    </div>
+  </div>            
+  <% end %>
+  <div class="row">
+      <div class="span8">
+        <%= will_paginate @recipes.hits, :class => 'my_class' %>
+      </div>
+  </div>
+</section>
+
+
+

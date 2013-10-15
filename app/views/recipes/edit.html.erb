@@ -1,0 +1,47 @@
+<div class="row">  
+  <div id="sidebar" class="span3">
+    <div class="well" style="padding: 8px 0;">
+      <ul class="nav nav-list">
+        <li class="nav-header">          
+            My Coode Cookbook
+        </li>
+        <li class="active">         
+          <%= link_to current_user do %>
+            <i class="icon-book"></i>
+            My recipes (<%= @user.recipes.size %>)
+          <%end%>          
+        </li>
+        <li>          
+          <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
+            <i class="icon-pencil"></i>
+            Drafts (<%= @drafts.size %>)
+          <%end%>
+        </li>
+        <li>
+          <%= link_to :controller => "users", :action => "contributions", :id => @user.id do %>
+            <i class="icon-file"></i>
+            Contributions (<%= @user.contributions.size %>)
+          <%end%>
+        </li>
+        <li class="nav-header">
+          Settings
+        </li>
+        <li>
+          <%= link_to edit_user_path(@user) do %>
+            <i class="icon-user"></i>
+            Profile
+          <%end%>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <%= link_to '+ new recipe', new_recipe_path %>          
+        </li>
+      </ul>
+    </div>    
+  </div>
+
+  <%= render 'edit_form' %>
+
+<!--%= link_to 'Show', @recipe %> |-->
+<!--%= link_to 'Back', recipes_path %-->
+</div>

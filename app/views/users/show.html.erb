@@ -1,0 +1,113 @@
+<div class="row">  
+  <div id="sidebar" class="span3">
+    <div class="well" style="padding: 8px 0;">
+      <ul class="nav nav-list">
+        <li class="nav-header">          
+            My Coode Cookbook
+        </li>
+        <li class="active">          
+          <a href="#">
+            <i class="icon-book icon-white"></i>
+            My recipes (<%= @user.recipes.size %>)
+          </a>          
+        </li>
+        <li>          
+          <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
+            <i class="icon-pencil"></i>
+            Drafts (<%= @drafts.size %>)
+          <%end%>
+        </li>
+        <li>
+          <%= link_to :controller => "users", :action => "contributions", :id => @user.id do %>
+            <i class="icon-file"></i>
+            Contributions (<%= @user.contributions.size %>)
+          <%end%>
+        </li>
+        <li class="nav-header">
+          Settings
+        </li>
+        <li>
+          <%= link_to edit_user_path(@user) do %>
+            <i class="icon-user"></i>
+            Profile
+          <%end%>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <%= link_to '+ new recipe', new_recipe_path %>          
+        </li>
+        <li class="divider"></li>
+        <li>
+          <i class="icon-tags"></i>
+          <% @user_tags.each do |tag| %>
+            <span class="label label-info"><%= link_to tag.name, {:action => 'user_search', :controller => 'users' ,:topic => tag.name}%></span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+    <!--div class="thumbnail">
+      <.%= image_tag @user.avatar.url(:thumb) %>      
+    </div-->
+  </div>
+  <div class="span8 main">
+    <div class="row">
+      <div class="span8">
+        <div class="row">
+          <div class="span5">
+            <h2><%= page_entries_info @recipes %></h2>           
+          </div>  
+          <div class="span3">
+            <%= form_tag '/usersearch' do %>
+              <%= text_field_tag "topic", '', :class=>'span2 search-query margintop4', :placeholder => 'search your recipe'%>             
+            <% end %>
+          </div>
+        </div>
+        <hr/>
+      </div>  
+    </div>
+    <% @recipes.each do |recipe| %>            
+      <div class="row">
+        <div class="span8">
+          <h2>
+            <%= link_to recipe.title, recipe %>
+            <% if recipe.is_draft%>
+              <span class="label label-important">draft</span>
+            <% end %> 
+          </h2>
+          <div class="row">
+            <div class="span7">
+              <p>
+                created at <%= recipe.create_at %> <br/>
+                last update <%= recipe.update_at %>
+              </p>
+              <% recipe.tags.each do |tag| %>
+                <span class="label label-info"><%= link_to tag.name, {:action => 'user_search', :controller => 'users' ,:topic => tag.name} %></span>
+              <% end %>
+            </div>            
+            <div class="span1">              
+              <%= link_to :controller => "recipes", :action => "show", :id => recipe.id do %>
+                <i class="icon-share-alt"></i>            
+              <%end%> 
+              <%= link_to :controller => "recipes", :action => "edit", :id => recipe.id do %>
+                <i class="icon-edit"></i>            
+              <%end%> 
+              <br/><br/>  
+              <%= button_to 'Destroy', recipe, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger' %>   
+              <!--%= button_to 'delete', :controller => "recipes", :action => "destroy", :id => recipe.id, :confirm => 'Are you sure?' do %>
+                <i class="icon-remove"></i-->            
+              <!--%end%-->   
+              <!--%= link_to 'Show', recipe, :class => 'btn btn-primary'%-->
+              <!--%= link_to 'Edit', edit_recipe_path(recipe), :class => 'btnbtn-success' %-->                                      
+            </div>
+          </div>
+          <hr/>
+        </div>
+      </div>                                
+    <% end %>     
+    <div class="row">
+      <div class="span8">          
+        <%= will_paginate @recipes, :class => 'my_class' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<% @users.each do |user| %>
+	<div id="user_info">
+		<div id="avatar">
+			<%= image_tag user.avatar.url(:thumb) %>
+		</div>	
+		<div id="info">
+			<%= link_to user.login,  user%><br/>
+			recipes: <%= user.recipes.count %> <br/>
+			<%= user.created_at %>
+		</div>
+	</div>
+<% end %>

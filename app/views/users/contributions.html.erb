@@ -1,0 +1,111 @@
+<div class="row">  
+  <div id="sidebar" class="span3">
+    <div class="well" style="padding: 8px 0;">
+      <ul class="nav nav-list">
+        <li class="nav-header">          
+            My Coode Cookbook
+        </li>
+        <li>          
+          <%= link_to current_user do %>
+              <i class="icon-book"></i>
+              My recipes (<%= @user.recipes.size %>)
+          <%end%>         
+        </li>
+        <li>          
+          <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
+            <i class="icon-pencil"></i>
+            Drafts (<%= @drafts.size %>)
+          <%end%>
+        </li>
+        <li class="active">
+          <a href="#">
+            <i class="icon-file icon-white"></i>
+            Contributions (<%= @user.contributions.size %>)
+          </a>
+        </li>
+        <li class="nav-header">
+          Settings
+        </li>
+        <li>
+          <%= link_to edit_user_path(@user) do %>
+            <i class="icon-user"></i>
+            Profile
+          <%end%>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <%= link_to '+ new recipe', new_recipe_path %>          
+        </li>
+        <li class="divider"></li>
+        <li>
+          <i class="icon-tags"></i>
+          <% @user_tags.each do |tag| %>
+            <span class="label label-info"><%= link_to tag.name, {:action => 'user_search', :controller => 'users' ,:topic => tag.name}%></span>
+          <% end %>
+        </li>
+      </ul>
+    </div>    
+  </div>
+  <div class="span8 main">
+    <div class="row">
+      <div class="span8">
+        <div class="row">
+          <div class="span5">
+            <h2>
+              <%= page_entries_info @contributions %>
+            </h2>
+          </div>  
+          <div class="span3">
+            <%= form_tag '/contributionsearch' do %>
+              <%= text_field_tag "topic", '', :class=>'span2 search-query margintop4', :placeholder => 'search your contribution'%>             
+            <% end %>
+          </div>
+        </div> 
+        <hr/> 
+      </div>      
+    </div>  
+    <% @contributions.each do |contribution| %>
+      <div class="row">
+        <div class="span8">
+          <h2>
+            <%= link_to contribution.title, :controller =>"recipes", :action =>"show", :id => contribution.id %>
+            <% if contribution.is_draft%>
+              <span class="label label-important">draft</span>
+            <% end %> 
+          </h2>
+          <div class="row">
+            <div class="span7">          
+              <p>
+                <%if contribution.text[0,200].include? "<code>" %>
+                  <%= raw contribution.text[0,200]%> </code></pre>...
+                <%  else %>
+                  <%= raw contribution.text[0,200]%> ...
+                <%  end %>
+              </p>
+              <p>
+                created by <b><%= link_to contribution.user.login, contribution.user %></b> 
+              </p>
+              <p>
+                recipe added <b><%= distance_of_time_in_words(DateTime.now, contribution.create_at) %></b> ago
+              </p>
+            </div>
+            <div class="span1">                    
+              <%= link_to :controller =>"recipes", :action =>"show", :id => contribution.id do %>
+                <i class="icon-share-alt"></i>            
+              <%end%>            
+              <%= link_to :controller =>"recipes", :action =>"delete_contribution", :id => contribution.id do %>
+                <i class="icon-remove"></i>
+              <%end%>
+            </div>
+          </div>
+          <hr/>
+        </div>
+      </div>      
+    <% end %>
+    <div class="row">
+      <div class="span8">  
+        <%= will_paginate @contributions, :class => 'my_class' %>
+      </div>
+    </div>
+  </div>
+</div>

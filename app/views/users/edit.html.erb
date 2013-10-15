@@ -1,0 +1,198 @@
+<div class="row">  
+  <div id="sidebar" class="span3">
+    <div class="well" style="padding: 8px 0;">
+      <ul class="nav nav-list">
+        <li class="nav-header">          
+            My Coode Cookbook
+        </li>
+        <li>     
+          <%= link_to current_user do %>
+              <i class="icon-book"></i>
+              My recipes (<%= @user.recipes.size %>)
+          <%end%>                  
+        </li>
+        <li>          
+          <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
+            <i class="icon-pencil"></i>
+            Drafts (<%= @drafts.size %>)
+          <%end%>
+        </li>
+        <li>
+          <%= link_to :controller => "users", :action => "contributions", :id => @user.id do %>
+            <i class="icon-file"></i>
+            Contributions (<%= @user.contributions.size %>)
+          <%end%>
+        </li>
+        <li class="nav-header">
+          Settings
+        </li>
+        <li class="active">
+          <a href="#">
+            <i class="icon-user icon-white"></i>
+            Profile
+          </a>   
+        </li>
+        <li class="divider"></li>
+        <li>
+          <%= link_to '+ new recipe', new_recipe_path %>          
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="span8 main">
+    <div class="row">
+      <div class="span8">
+        <h1>Profile</h1>
+        <hr/> 
+      </div>
+    </div>
+    <div class="row">
+      <div class="span8">
+        <%= form_for @user, :url => {:action => 'update'}, :html => { :multipart => true, :class => 'form-horizontal' } do |form| %>
+          <% if @user.errors.any? %>
+            <div class="alert alert-block alert-error fade in">
+              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+              <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+      </div>
+    </div>
+    <div class="row">         
+      <div class="span5">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="input01"><%= label_tag 'full name' %></label>   
+            <div class="controls">
+              <%= form.text_field :name, :class => 'input-xlarge', :id => 'input01' %>
+            </div>          
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input02"><%= label_tag 'email' %></label> 
+            <div class="controls">
+              <%= form.email_field :email, :class => 'input-xlarge', :id => 'input02' %>
+              <p class="help-block">
+                <i>Just for notifications.</i>
+              </p>
+            </div>                        
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input02"><%= label_tag 'Gender' %></label>
+            <div class="controls">
+              <%= form.radio_button :gener, 1 %>
+              Male
+              <%= form.radio_button :gener, 2 %>
+              Female
+              <%= form.radio_button :gener, 0 %>
+              No answer
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input03"><%= label_tag 'Birth date' %></label>
+            <div class="controls">
+              <%= form.date_select :birth_date, {:start_year => 1930}, {:class => 'span1'} %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input04"><%= label_tag 'Country' %></label>
+            <div class="controls">
+              <%= form.collection_select :country, User::COUNTRIES, :to_s, :titleize, {:include_blank => true} %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input05"><%= label_tag 'City' %></label>
+            <div class="controls">
+              <%= form.text_field :city %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input06"><%= label_tag 'User site' %></label>
+            <div class="controls">
+              <%= form.url_field :user_web_site %>
+              <p class="help-block">
+                <i>use http://</i>
+              </p>              
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="span2"> 
+        <div class="row">
+          <div class="thumbnail">
+            <%= image_tag @user.avatar.url(:medium) %>
+          </div>
+        </div>
+        </br></br>
+        <div class="row">
+          <fieldset>
+            <div class="control-group">  
+              <div class="controls">
+                <%= form.file_field :avatar %>
+              </div>              
+            </div>
+          </fieldset>
+        </div>
+      </div> 
+    </div>
+    <div class="row">
+      <div class="span8">
+        <h1>Social data</h1>
+        <hr/> 
+      </div>
+    </div>
+    <div class="row">
+      <div class="span8">
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label" for="input07"><%= label_tag 'twitter' %></label>
+            <div class="controls">
+              <%= form.url_field :twitter_profile, :class => "span5" %>
+              <p class="help-block">
+                <i>use http://</i>
+              </p> 
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="input08"><%= label_tag 'facebook' %></label>
+            <div class="controls">
+              <%= form.url_field :facebook_profile, :class => "span5" %>
+              <p class="help-block">
+                <i>use http://</i>
+              </p> 
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input09"><%= label_tag 'linkedin' %></label>
+            <div class="controls">
+              <%= form.url_field :linkedin_profile, :class => "span5" %>
+              <p class="help-block">
+                <i>use http://</i>
+              </p> 
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input10"><%= label_tag 'github' %></label>
+            <div class="controls">
+              <%= form.url_field :github_profile, :class => "span5" %>
+              <p class="help-block">
+                <i>use http://</i>
+              </p> 
+            </div>
+          </div>
+          <div class="form-actions">
+            <%= submit_tag 'update', :class => 'btn btn-primary btn-large span2' %>
+          </div>
+        </fieldset>
+      </div>
+    </div>                                    
+    <% end %>
+  </div>     
+</div>
+
+<!--%= render 'profile' %-->
+
+<!--%= link_to 'Show', @user %> | <.%= link_to 'Back', @user %-->

@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="span8 main">
+    <div class="row">
+      <div class="span8">
+        <h2>User's cookbook: <small><%= page_entries_info @recipes %></small></h2>
+        <hr/> 
+      </div>
+    </div>
+    <% @recipes.each do |recipe| %>
+      <div class="row">
+        <div class="span8">
+          <h2>
+            <%= link_to recipe.title, recipe %>
+            <% if recipe.is_draft%>
+              <span class="label label-important">draft</span>
+            <% end %>
+          </h2>
+          <div class="row">
+            <div class="span8">     
+              <p>
+                <%if recipe.text[0,200].include? "<code>" %>
+                  <%= raw recipe.text[0,200]%> </code></pre>...
+                <%  else %>
+                  <%= raw recipe.text[0,200]%> ...
+                <%  end %>
+              </p>
+              <p>
+                created by <b><%= link_to recipe.user.login, recipe.user %></b> at <%= recipe.create_at %>
+              </p>
+              <!--% recipe.tags.each do |tag| %>
+                  <.%= link_to tag.name, {:action => 'search', :controller => 'search' ,:topic => tag.name}, :class => 'tag' %>
+              <.% end %-->             
+            </div>
+          </div>
+          <hr/>
+        </div>
+      </div>
+    <% end %>
+    <div class="row">
+      <div class="span8"> 
+        <%= will_paginate @recipes, :class => 'my_class' %>
+      </div>
+    </div>
+  </div>
+  
+  <div id="sidebar" class="span3">
+    <div class="well" style="padding: 8px 0;">
+      <ul class="nav nav-list">
+        <center><h1><%= @user.login%></h1></center>
+        <li class="divider"></li>
+        <div class="thumbnail">
+          <%= image_tag @user.avatar.url(:medium) %>
+        </div>      
+        <h2>
+          <%= @user.name%>
+        </h2>
+        <p>
+          <%if @user.gener == 1%>
+          Male, <%= distance_of_time_in_words(DateTime.now, @user.birth_date) %> old
+          <%  elsif @user.gener == 2 %>
+          Female, <%= distance_of_time_in_words(DateTime.now, @user.birth_date) %> old
+          <% end  %>
+        </p>
+        <p>
+            <%  if @user.city != '' && @user.country != '' %>
+              <b> <%= @user.city %>, <%= @user.country %> </b>
+            <%  else %>
+              <b> <%= @user.city %> <%= @user.country %> </b>
+            <%  end %>
+        </p>
+        <p>
+          posted <%= @user.recipes.count%> recipes
+        </p>
+        <p>
+          Since <%= @user.created_at.strftime('%d %B %Y')%>
+        </p>
+        <li class="divider"></li>
+        <p>
+          <%if @user.twitter_profile != ''%>
+            <a href="<%= @user.twitter_profile%>"> <%=image_tag('twitter.png')%></a>
+          <%end%>
+
+          <%if @user.facebook_profile != ''%>
+            <a href="<%= @user.facebook_profile%>"> <%=image_tag('facebook.png')%></a>
+          <%end%>
+
+          <%if @user.linkedin_profile != ''%>
+            <a href="<%= @user.linkedin_profile%>"> <%=image_tag('linkedin.png')%></a>
+          <%end%>
+
+          <%if @user.github_profile != ''%>
+            <a href="<%= @user.github_profile%>"> <%=image_tag('github.png')%></a>
+          <%end%>
+        </p>
+        <br/>
+        <p>
+          <i class="icon-tags"></i>
+          <% @user_tags.each do |tag| %>
+            <span class="label label-info"><%= link_to tag.name, {:action => 'search', :controller => 'search' ,:topic => tag.name}%></span>
+          <% end %>
+        </p>
+      </ul>      
+    </div>        
+  </div>
+</div>

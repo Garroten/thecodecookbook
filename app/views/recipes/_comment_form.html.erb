@@ -1,0 +1,50 @@
+<script type="text/javascript">
+	window.onload = function() {
+		new WMD("input", "toolbar", { preview: "preview" });
+	};
+</script>
+<div class="row-fluid"> 
+  <div class="span12">
+    <h2>Add a comment</h2>
+    <br/>
+  </div>
+</div>  
+
+<%= form_for(@comment) do |f| %>
+  <% if @comment.errors.any? %>
+    <div class="row-fluid">  
+      <div class="span12">
+        <div class="alert alert-block alert-error fade in">
+          <a class="close" data-dismiss="alert">×</a>
+          <h2 class="alert-heading"><%= pluralize(@comment.errors.count, "error") %> 
+            prohibited this comment from being saved:
+          </h2>
+          <ul>
+          <% @comment.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row-fluid">  
+    <div class="span12">
+      <div id="toolbar" class="wmd-toolbar"></div>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <%= f.text_area :taged_text, :id => "input", :class =>'wmd-input comment_text span12' %>
+    <%= f.text_area :text, :id => "preview", :class => "wmd-preview nodisplay" %>
+  </div>
+  <div class="row-fluid">  
+    <div class="span12">
+      <div id="preview" class="wmd-preview"></div>
+      <%= f.hidden_field :user_id %>
+      <%= f.hidden_field :recipe_id %>        
+      <%= f.submit :class => 'offset9 btn btn-large btn-success' %>
+    </div>
+  </div>
+
+<% end %>

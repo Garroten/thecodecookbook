@@ -1,0 +1,46 @@
+<div id="loginbox">             
+    <%= form_tag session_path, :class => 'loginform' do -%>
+        <center>
+          <%= link_to image_tag('thecodecookbook300.png'), root_path %>
+        </center> 
+        <% if flash[:warning]%>
+          <div class="alert alert-block alert-error fade in">
+            <a class="close" href="#" data-dismiss="alert">×</a>          
+            <%= flash[:warning] %>
+          </div>          
+        <% end %>    
+        <% if flash[:notice] %>
+          <div class="alert alert-success fade in">
+            <a class="close" data-dismiss="alert">×</a>
+            <%= flash[:notice] %>
+          </div>          
+        <% end %> 
+        <% if flash[:error] %>
+          <div class="alert alert-block alert-error fade in">                      
+            <h4 class="alert-heading">You got an error!</h4>
+            <p>
+              <%= flash[:error] %>
+            </p>
+          </div>          
+        <% end %> 
+
+        <%= label_tag 'login' %>
+        <%= text_field_tag 'login', @login, :class => 'span3' %>
+
+        <%= label_tag 'password' %>
+        <%= password_field_tag 'password', nil, :class => 'span3' %>
+
+        <!-- Uncomment this if you want this functionality
+        <p><.%= label_tag 'remember_me', 'Remember me' %>
+        <.%= check_box_tag 'remember_me', '1', @remember_me %></p>
+        -->
+
+        <%= submit_tag 'Log in', :class => 'btn btn-primary' %>
+
+    <% end -%>  
+
+    <center>
+      <a href="javascript: window.history. back()"> «back </a> | 
+      <%= link_to 'Join Us!', new_user_path %>
+    </center>
+</div>
