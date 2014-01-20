@@ -6,7 +6,7 @@ development:
   timeout: 5000
   username: root
   password: 
-  socket: /private/tmp/mysql.sock
+#  socket: /private/tmp/mysql.sock
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
@@ -19,4 +19,7 @@ test:
 production:
   adapter: mysql
   database: thecodecookbook_production
+  timeout: 5000
+  username: code1p7e
+  password: 9Lrqah6nPMaGpUHD
 

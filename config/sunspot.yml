@@ -1,12 +1,13 @@
 production:
   solr:
     hostname: localhost
-    port: 8983
+    path: /solr/code
+    port: 8080
     log_level: WARNING
 
 development:
   solr:
-    hostname: 83.150.206.154
+    hostname: 85.214.238.131
     path: /solr/code
     port: 8080
     log_level: INFO
