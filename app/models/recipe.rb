@@ -12,10 +12,7 @@ class Recipe < ActiveRecord::Base
   validates :text,  :presence   => true
   
   validates :tag_list, :presence   => true,
-                       :length     => { :maximum => 255 }
-                      
-  validates :skill_list, :presence   => true,
-                         :length     => { :maximum => 255 }    
+                       :length     => { :maximum => 255 }  
   
   searchable do
     text    :title, :text
