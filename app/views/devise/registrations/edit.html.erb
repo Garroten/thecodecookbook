@@ -1,0 +1,111 @@
+<div class="row">  
+  <div id="sidebar" class="span3">
+    <div class="well" style="padding: 8px 0;">
+      <ul class="nav nav-list">
+        <li class="nav-header">          
+            My Coode Cookbook
+        </li>
+        <li>     
+          <%= link_to current_user do %>
+              <i class="icon-book"></i>
+              My recipes <span class="badge badge-info"><%= @user.recipes.size %></span>
+          <%end%>                  
+        </li>
+        <li>    
+          <%= link_to :controller => "/users", :action => "drafts", :id => @user.id do %>
+            <i class="icon-pencil"></i>
+            Drafts <span class="badge badge-info"><%= @drafts.size %></span>
+          <%end%>
+        </li>
+        <li>
+          <%= link_to :controller => "/users", :action => "contributions", :id => @user.id do %>
+            <i class="icon-file"></i>
+            Contributions <span class="badge badge-info"><%= @user.contributions.size %></span>
+          <%end%>
+        </li>
+        <li class="nav-header">
+          Settings
+        </li>
+        <li>
+          <%= link_to edit_user_path(@user) do %>
+            <i class="icon-user"></i>
+            Profile
+          <%end%>                      
+        </li>
+        <li class="active">
+          <a href="#">
+            <i class="icon-lock icon-white"></i>
+            Edit registration
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <%= link_to '+ new recipe', new_recipe_path %>          
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="span8 main">
+    <div class="row">
+      <div class="span8">
+        <h1>Edit <%= resource_name.to_s.humanize %></h1>
+        <hr/> 
+      </div>
+    </div>
+    <div class="row">
+      <div class="span8">
+        <%= devise_error_messages! %>
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div class="alert alert-block alert-error fade in">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row"> 
+      <div class="span5">  
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>          
+          <fieldset>
+            <label class="control-label" for="input01">
+              <%= f.label :email %>
+            </label>
+            <div class="controls">
+              <%= f.email_field :email, :autofocus => true %>
+            </div>
+          </fieldset>                    
+          
+          <fieldset>
+            <label class="control-label" for="input01">
+              <%= f.label :password %>
+            </label>
+            <div class="controls">
+              <%= f.password_field :password, :autocomplete => "off" %>
+              <p class="help-block">
+                <i>(leave blank if you don't want to change it)</i>
+              </p>
+            </div>
+            
+            <label class="control-label" for="input01">
+              <%= f.label :password_confirmation %>
+            </label>
+            <div class="controls">
+              <%= f.password_field :password_confirmation %>
+            </div>
+
+            <label class="control-label" for="input01">
+              <%= f.label :current_password %> 
+            </label>
+            <div class="controls">
+              <%= f.password_field :current_password %>
+              <p class="help-block">
+                <i>(we need your current password to confirm your changes)</i>                
+              </p>
+            </div>                        
+          </fieldset>  
+          <div><%= f.submit "Update", :class => 'btn btn-primary btn-large span2' %></div>
+        <% end %>       
+      </div>
+    </div>     
+  </div>
+</div>

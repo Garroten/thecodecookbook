@@ -1,0 +1,30 @@
+<div id="loginbox">   
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <center>
+        <%= link_to image_tag('thecodecookbook300.png'), root_path %>
+      </center> 
+      <%= devise_error_messages! %>
+      <%= f.label :email %>
+      <%= f.email_field :email, :autofocus => true, :class => 'span3' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, :class => 'span3' %>
+      <div class="control-group ">
+        <% if devise_mapping.rememberable? -%>
+          <%= f.check_box :remember_me %> Remember me
+        <% end -%>
+      </div>
+      <br/>
+      <center>
+        <%= f.submit "Log in", :class => 'btn btn-primary btn-large' %>
+      </center>
+      <hr/>
+      <center>
+        <%= link_to image_tag('loginfacebook.png'), user_omniauth_authorize_path(:facebook) %>
+      </center>
+    <% end %> 
+    <center>
+      <%= link_to "Back", :back %> | 
+      <%= render "devise/shared/links" %>
+    </center>    
+</div>

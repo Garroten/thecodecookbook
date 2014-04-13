@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>  
+  <head>
+    <title>The Code Cookbook</title>
+    <link rel="shortcut icon" href="/images/icon.png"/>
+    <html xmlns:fb="http://www.facebook.com/2008/fbml"/>
+    <%= stylesheet_link_tag :all %>
+    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag "showdown.js"%>  
+    <%= javascript_include_tag "wmd.js"%>
+    <%= javascript_include_tag "chunk.js"%>
+    <%= javascript_include_tag "inputstate.js"%>
+    <%= javascript_include_tag "command.js"%>
+    <%= javascript_include_tag "dialog.js"%>
+    <%= javascript_include_tag "form.js"%>
+    <%= javascript_include_tag "field.js"%>
+    <%= javascript_include_tag "linkhelper.js"%>    
+    <%= javascript_include_tag "bootstrap_modal.js"%>
+    <%= javascript_include_tag "bootstrap_alert.js"%>
+    <%= csrf_meta_tag %>    
+    <style>
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        line-height: 18px;
+        color: #333333;
+        background-color: #F5F5F5;
+        padding-bottom: 40px;
+        padding-top: 55px;               
+      }
+      
+      #loginbox {
+          margin: 7em auto;
+          width: 320px;
+      } 
+      
+      #signup{
+          margin: 7em auto;
+          width: 640px;
+          background: none repeat scroll 0 0 #FFFFFF;
+          border: 1px solid #E5E5E5;
+          border-radius: 3px 3px 3px 3px;
+          box-shadow: 0 4px 10px -1px rgba(200, 200, 200, 0.7);
+      }
+      
+      #loginbox form p {
+        margin-bottom: 0;
+      }
+      
+      .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+          width: 375px;
+      }
+      
+      .main {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border-radius: 3px 3px 3px 3px;
+        box-shadow: 0 4px 10px -1px rgba(200, 200, 200, 0.7);
+        min-height: 400px;
+        min-width: 375px;
+        padding: 10px 20px;
+      }
+    </style>
+  </head>
+  <body>  
+    <!-- ClickTale Top part -->
+      <script type="text/javascript">
+        var WRInitTime=(new Date()).getTime();
+      </script>
+    <!-- ClickTale end of Top part -->
+    <%= yield %>   
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-47319665-1', 'thecodecookbook.com');
+      ga('send', 'pageview');
+
+    </script>  
+    <!-- ClickTale Bottom part -->
+      <script type='text/javascript'>
+        // The ClickTale Balkan Tracking Code may be programmatically customized using hooks:
+        // 
+        //   function ClickTalePreRecordingHook() { /* place your customized code here */  }
+        //
+        // For details about ClickTale hooks, please consult the wiki page http://wiki.clicktale.com/Article/Customizing_code_version_2
+
+        document.write(unescape("%3Cscript%20src='"+
+        (document.location.protocol=='https:'?
+        "https://clicktalecdn.sslcs.cdngc.net/www02/ptc/20ad4f86-9616-435e-b29b-9e2fce31229e.js":
+        "http://cdn.clicktale.net/www02/ptc/20ad4f86-9616-435e-b29b-9e2fce31229e.js")+"'%20type='text/javascript'%3E%3C/script%3E"));
+      </script>
+    <!-- ClickTale end of Bottom part -->
+  </body>
+</html>

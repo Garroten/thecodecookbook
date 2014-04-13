@@ -1,0 +1,40 @@
+<div id="loginbox">    
+  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+    <%= f.hidden_field :reset_password_token %>
+    <center>
+      <%= link_to image_tag('thecodecookbook300.png'), root_path %>
+    </center> 
+    <center>
+      <h2>Change your password</h2>
+    </center>
+    <br/>
+    <%= devise_error_messages! %>       
+    <fieldset>
+      <div class="control-group">
+        <label class="control-label" for="input01"> 
+          <%= f.label :password, "New password" %>
+        </label>
+        <div class="controls">   
+          <%= f.password_field :password, :autofocus => true, :class => 'span3' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input01"> 
+          <%= f.label :password_confirmation, "Confirm new password" %>
+        </label>
+        <div class="controls">    
+          <%= f.password_field :password_confirmation, :class => 'span3' %>
+        </div>
+      </div>
+      </fieldset>
+    <div id='submit_login'>
+      <center>
+        <%= f.submit "Change my password", :class => 'btn btn-primary' %>
+      </center>   
+    </div>  
+  <% end %>
+  <center>
+    <%= link_to "Log in", new_session_path(resource_name) %> |
+    <%= link_to "Sign up", new_registration_path(resource_name) %>
+  </center>  
+</div>
