@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207195430) do
+ActiveRecord::Schema.define(:version => 20140128204015) do
 
   create_table "comments", :force => true do |t|
     t.text     "text"
@@ -55,31 +55,41 @@ ActiveRecord::Schema.define(:version => 20111207195430) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
-    t.string   "name",                      :limit => 100, :default => ""
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
+    t.string   "login",                  :limit => 40
+    t.string   "name",                   :limit => 100, :default => ""
+    t.string   "email",                                 :default => "",    :null => false
+    t.string   "encrypted_password",                    :default => "",    :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                         :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.integer  "role"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "gener",                                    :default => 0
+    t.integer  "gener",                                 :default => 0
     t.date     "birth_date"
-    t.string   "country",                                  :default => ""
-    t.string   "city",                                     :default => ""
-    t.string   "user_web_site",                            :default => ""
-    t.string   "twitter_profile",                          :default => ""
-    t.string   "facebook_profile",                         :default => ""
-    t.string   "linkedin_profile",                         :default => ""
-    t.string   "github_profile",                           :default => ""
+    t.string   "country",                               :default => ""
+    t.string   "city",                                  :default => ""
+    t.string   "user_web_site",                         :default => ""
+    t.string   "twitter_profile",                       :default => ""
+    t.string   "facebook_profile",                      :default => ""
+    t.string   "linkedin_profile",                      :default => ""
+    t.string   "github_profile",                        :default => ""
+    t.string   "provider"
+    t.string   "uid"
+    t.boolean  "admin",                                 :default => false
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

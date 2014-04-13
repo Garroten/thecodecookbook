@@ -8,19 +8,19 @@
         <li>     
           <%= link_to current_user do %>
               <i class="icon-book"></i>
-              My recipes (<%= @user.recipes.size %>)
+              My recipes <span class="badge badge-info"><%= @user.recipes.size %></span>
           <%end%>                  
         </li>
         <li>          
           <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
             <i class="icon-pencil"></i>
-            Drafts (<%= @drafts.size %>)
+            Drafts <span class="badge badge-info"><%= @drafts.size %></span>
           <%end%>
         </li>
         <li>
           <%= link_to :controller => "users", :action => "contributions", :id => @user.id do %>
             <i class="icon-file"></i>
-            Contributions (<%= @user.contributions.size %>)
+            Contributions <span class="badge badge-info"><%= @user.contributions.size %></span>
           <%end%>
         </li>
         <li class="nav-header">
@@ -31,6 +31,12 @@
             <i class="icon-user icon-white"></i>
             Profile
           </a>   
+        </li>
+        <li>
+          <%= link_to edit_user_registration_path do %>  
+            <i class="icon-lock"></i>
+            Edit registration
+          <%end%>
         </li>
         <li class="divider"></li>
         <li>
@@ -183,7 +189,7 @@
               </p> 
             </div>
           </div>
-          <div class="form-actions">
+          <div>
             <%= submit_tag 'update', :class => 'btn btn-primary btn-large span2' %>
           </div>
         </fieldset>
@@ -192,7 +198,3 @@
     <% end %>
   </div>     
 </div>
-
-<!--%= render 'profile' %-->
-
-<!--%= link_to 'Show', @user %> | <.%= link_to 'Back', @user %-->

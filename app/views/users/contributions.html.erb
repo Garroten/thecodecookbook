@@ -7,20 +7,20 @@
         </li>
         <li>          
           <%= link_to current_user do %>
-              <i class="icon-book"></i>
-              My recipes (<%= @user.recipes.size %>)
+            <i class="icon-book"></i>
+            My recipes <span class="badge badge-info"><%= @user.recipes.size %></span>
           <%end%>         
         </li>
         <li>          
           <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
             <i class="icon-pencil"></i>
-            Drafts (<%= @drafts.size %>)
+            Drafts <span class="badge badge-info"><%= @drafts.size %></span>
           <%end%>
         </li>
         <li class="active">
           <a href="#">
             <i class="icon-file icon-white"></i>
-            Contributions (<%= @user.contributions.size %>)
+            Contributions <span class="badge"><%= @user.contributions.size %></span>
           </a>
         </li>
         <li class="nav-header">
@@ -30,6 +30,12 @@
           <%= link_to edit_user_path(@user) do %>
             <i class="icon-user"></i>
             Profile
+          <%end%>
+        </li>
+        <li>
+          <%= link_to edit_user_registration_path do %>  
+            <i class="icon-lock"></i>
+            Edit registration
           <%end%>
         </li>
         <li class="divider"></li>
@@ -74,7 +80,7 @@
             <% end %> 
           </h2>
           <div class="row">
-            <div class="span7">          
+            <div class="span6">          
               <p>
                 <%if contribution.text[0,200].include? "<code>" %>
                   <%= raw contribution.text[0,200]%> </code></pre>...
@@ -89,13 +95,19 @@
                 recipe added <b><%= distance_of_time_in_words(DateTime.now, contribution.create_at) %></b> ago
               </p>
             </div>
-            <div class="span1">                    
-              <%= link_to :controller =>"recipes", :action =>"show", :id => contribution.id do %>
-                <i class="icon-share-alt"></i>            
-              <%end%>            
-              <%= link_to :controller =>"recipes", :action =>"delete_contribution", :id => contribution.id do %>
-                <i class="icon-remove"></i>
-              <%end%>
+            <div class="span2"> 
+                <div class="btn-group">
+                  <button class="btn">                     
+                    <%= link_to :controller =>"recipes", :action =>"show", :id => contribution.id do %>
+                      <i class="icon-share-alt"></i>            
+                    <%end%>         
+                  </button>
+                  <button class="btn">  
+                    <%= link_to :controller =>"recipes", :action =>"delete_contribution", :id => contribution.id do %>
+                      <i class="icon-trash"></i>
+                    <%end%>
+                  </button>
+                </div>
             </div>
           </div>
           <hr/>

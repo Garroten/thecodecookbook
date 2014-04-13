@@ -2,11 +2,15 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.xml
   def index
-    @comments = Comment.all
+    if current_user.try(:admin?)
+      @comments = Comment.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @comments }
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @comments }
+      end
+    else
+      redirect_to root_path
     end
   end
 

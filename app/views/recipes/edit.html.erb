@@ -8,19 +8,19 @@
         <li class="active">         
           <%= link_to current_user do %>
             <i class="icon-book"></i>
-            My recipes (<%= @user.recipes.size %>)
+            My recipes <span class="badge badge-info"><%= @user.recipes.size %></span>
           <%end%>          
         </li>
         <li>          
           <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
             <i class="icon-pencil"></i>
-            Drafts (<%= @drafts.size %>)
+            Drafts <span class="badge badge-info"><%= @drafts.size %></span>
           <%end%>
         </li>
         <li>
           <%= link_to :controller => "users", :action => "contributions", :id => @user.id do %>
             <i class="icon-file"></i>
-            Contributions (<%= @user.contributions.size %>)
+            Contributions <span class="badge badge-info"><%= @user.contributions.size %></span>
           <%end%>
         </li>
         <li class="nav-header">
@@ -32,6 +32,12 @@
             Profile
           <%end%>
         </li>
+        <li>
+          <%= link_to edit_user_registration_path do %>  
+            <i class="icon-lock"></i>
+            Edit registration
+          <%end%>
+        </li>
         <li class="divider"></li>
         <li>
           <%= link_to '+ new recipe', new_recipe_path %>          
@@ -39,9 +45,5 @@
       </ul>
     </div>    
   </div>
-
   <%= render 'edit_form' %>
-
-<!--%= link_to 'Show', @recipe %> |-->
-<!--%= link_to 'Back', recipes_path %-->
 </div>

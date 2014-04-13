@@ -16,8 +16,8 @@
 			indent  : { visible : true },
 			outdent : { visible : true },
 
-			subscript   : { visible : true },
-			superscript : { visible : true },
+			subscript   : { visible : false },
+			superscript : { visible : false },
 			
 			undo : { visible : true },
 			redo : { visible : true },
@@ -27,7 +27,7 @@
 			insertHorizontalRule : { visible : true },
 
 			h4: {
-				visible: true,
+				visible: false,
 				className: 'h4',
 				command: ($.browser.msie || $.browser.safari) ? 'formatBlock' : 'heading',
 				arguments: ($.browser.msie || $.browser.safari) ? '<h4>' : 'h4',
@@ -35,7 +35,7 @@
 				tooltip: 'Header 4'
 			},
 			h5: {
-				visible: true,
+				visible: false,
 				className: 'h5',
 				command: ($.browser.msie || $.browser.safari) ? 'formatBlock' : 'heading',
 				arguments: ($.browser.msie || $.browser.safari) ? '<h5>' : 'h5',
@@ -43,7 +43,7 @@
 				tooltip: 'Header 5'
 			},
 			h6: {
-				visible: true,
+				visible: false,
 				className: 'h6',
 				command: ($.browser.msie || $.browser.safari) ? 'formatBlock' : 'heading',
 				arguments: ($.browser.msie || $.browser.safari) ? '<h6>' : 'h6',
@@ -81,17 +81,18 @@
 </script>
 
 <div class="span8 main">
+    <%= form_for @recipe, :as => :recipe, :url => {:action => 'update'},
+                      :html => {:multipart => true}  do |f| %>
     <div class="row">
       <div class="span8">
-        <h1>Updating a recipe</h1>
-        <hr/> 
-      </div>      
+        <div class="control-group">
+          <%= f.text_field :title, :class => 'span8 titlepers'%>
+          <hr/> 
+        </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="span8">
-          <%= form_for @recipe, :as => :recipe, :url => {:action => 'update'},
-                      :html => {:multipart => true}  do |f| %>
-
+    <div class="row">      
+        <div class="span8">          
             <% if @recipe.errors.any? %>
               <div class="alert alert-block alert-error fade in">          
                 <a class="close" data-dismiss="alert">×</a>
@@ -102,31 +103,28 @@
                     <% end %>
                   </ul>
               </div>
-            <% end %>
-
-            <div class="control-group">
-              <%= f.label :title %>
-              <%= f.text_field :title, :class => 'span8'%>
-            </div>
-            <div class="control-group">
-              <%= f.label :tag_list, "Tags" %>
-              <%= f.text_field :tag_list, :class => 'span8', 'data-role'=>"tagsinput" %>              
-            </div>
+            <% end %> 
+            <div class="row">
+              <div class="span7">
+                <i class="icon-tags"></i>
+                <%= f.text_field :tag_list, :class => 'span3', 'data-role'=>"tagsinput" %>    
+              </div>
+              <div class="span1 draft">
+                <%= f.check_box :is_draft %> draft
+              </div>
+            </div>            
             <div class="control-group">              
               <%= f.text_area :text, :id => "wysiwyg", :class => "span8" %>                           
-            </div> 
-            <div class="control-group">
-              <label class="checkbox">
-                <%= f.check_box :is_draft %>Is a draft?
-              </label>	    	    
-            </div>
-            
-            <div class="form-actions">
-              <div class="offset5">
-                <a href="javascript: window.history. back()" class="btn btn-large"> Cancel </a>
-                <%= f.submit "Update", :class => 'btn btn-large btn-success'%>
+            </div>             
+            <hr>  
+            <div class="recipebtn">
+              <div class="span1">                 
+                <a href="javascript: window.history. back()" class="btn btn-large"> Cancel </a>            
               </div>
-            </div>                                    
+              <div class="span1">
+                <%= f.submit "Update", :class => 'btn btn-large btn-primary'%>
+              </div>
+            </div>                                   
         <% end %>        
       </div>
     </div>

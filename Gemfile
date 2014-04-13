@@ -14,6 +14,8 @@ gem 'paperclip', '~> 2.3'
 gem 'sunspot_rails'
 gem 'prototype-rails'
 gem 'mysql'
+gem 'devise'
+gem 'omniauth-facebook'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

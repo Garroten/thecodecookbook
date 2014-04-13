@@ -6,10 +6,10 @@
       <% if @recipe.is_draft %>
         <span class="label label-important">draft</span>
       <% end %>
-      <small>
-        <%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+      <!--small>
+        <.%= link_to 'Edit', edit_recipe_path(@recipe) %> |
         <a href="javascript: window.history. back() "> Back </a>
-      </small>
+      </small-->
     </h1>
     <br/>
     <i class="icon-tags"></i> 		
@@ -50,7 +50,7 @@
       </div>
     </div>
   <% end %>
-  <% if logged_in? %>
+  <% if user_signed_in? %>
     <%= render 'recipes/comment_form' %>          
   <% else %>
     <div class="row-fluid"> 

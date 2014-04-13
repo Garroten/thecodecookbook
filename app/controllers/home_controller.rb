@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
-  skip_before_filter :login_required, :only => [:index, :tag]
+  #skip_before_filter :login_required, :only => [:index, :tag]
+  #before_filter :authenticate_user!, :except => [:index, :tag]
   before_filter :get_users
   layout 'home'
   
@@ -9,7 +10,6 @@ class HomeController < ApplicationController
   
   def index
     @tags = Recipe.tag_counts_on(:tags)
-    #@recipe = Recipe.find(:last)
     render :index
   end  
   

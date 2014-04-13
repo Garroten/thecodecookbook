@@ -25,5 +25,7 @@ Thecodecookbook::Application.configure do
   
   # Root to ImageMagilc for paperclip
   Paperclip.options[:command_path] = "/usr/local/bin/"
+  
+  
 end
 

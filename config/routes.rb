@@ -1,15 +1,21 @@
 Thecodecookbook::Application.routes.draw do
+
+  devise_for :users, :controllers => {:registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks" }  do
+    get "/users/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session   
+    post "/set_user_data" => "users/omniauth_callbacks#set_user_data"
+  end
+
   resources :comments
 
   resources :recipes
 
   resources :users
 
-  resource :session, :only => [:new, :create, :destroy]
+  #resource :session, :only => [:new, :create, :destroy]
 
   
 
-  match '/activate/:activation_code' => 'users#activate', :as => :activate, :activation_code => nil
+  #match '/activate/:activation_code' => 'users#activate', :as => :activate, :activation_code => nil
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -80,12 +86,13 @@ Thecodecookbook::Application.routes.draw do
   match "/draftsearch/:topic" => "users#draft_search"
   match "/contributionsearch" => "users#contribution_search"
   
+  
   #restful-authentication
-  match 'login' => 'sessions#new', :as => :login
-  match 'logout' => 'sessions#destroy', :as => :logout
-  match 'signup' => 'users#new', :as => :signup
-  match 'register' => 'users#create', :as => :register
-  match '/users/:id' => 'users#show', :as => :account
+  #match 'login' => 'sessions#new', :as => :login
+  #match 'logout' => 'sessions#destroy', :as => :logout
+  #match 'signup' => 'users#new', :as => :signup
+  #match 'register' => 'users#create', :as => :register
+  #match '/users/:id' => 'users#show', :as => :account
 
   #Users
   match '/profile/:id' => 'users#profile', :as => :profile

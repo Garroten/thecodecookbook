@@ -16,11 +16,5 @@ test:
   database: thecodecookbook_test
   timeout: 5000
 
-production:
-  adapter: mysql
-  database: thecodecookbook_production
-  timeout: 5000
-  username: code1p7e
-  password: 9Lrqah6nPMaGpUHD
-  socket: /var/run/mysqld/mysqld.sock
+
 

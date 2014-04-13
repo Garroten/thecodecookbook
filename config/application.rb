@@ -39,5 +39,10 @@ module Thecodecookbook
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
     config.autoload_paths << File.join(config.root, "lib")
+    
+    config.to_prepare do
+        Devise::SessionsController.layout "login"           
+        Devise::PasswordsController.layout "login"        
+    end
   end
 end

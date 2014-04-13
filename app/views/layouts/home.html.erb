@@ -96,19 +96,23 @@
     </style>
 </head>
 <body>
+  <!-- ClickTale Top part -->
+    <script type="text/javascript">
+      var WRInitTime=(new Date()).getTime();
+    </script>
+  <!-- ClickTale end of Top part -->
   <div class="navbar">
     <div class="navbar-inner">
       <div class="container">             
         <div class="nav-collapse">
           <ul class="nav pull-right">
-            <% if logged_in? %>
-              <li><%= link_to 'logout', logout_path %></li>
-              <li class="menu_right"><%= link_to current_user.login,  current_user%></li>
+            <% if user_signed_in? %>
+              <li><%= link_to('logout', destroy_user_session_path, :method => :delete) %></li>
+              <li class="menu_right"><%= link_to(current_user.login, current_user) %></li>
             <% else %>
-              <li><%= link_to 'Login', login_path %></li>
-              <!--li><a data-toggle="modal" href="#login" >Login</a></li-->
-              <li class="menu_right"><%= link_to 'Join Us!', new_user_path %></li>
-            <% end %>
+              <li><%= link_to('login', new_user_session_path) %></li>
+              <li class="menu_right"><%= link_to('Join Us!', new_user_registration_path)  %></li>
+            <% end %>                         
           </ul>
         </div>
       </div>
@@ -153,7 +157,7 @@
       <footer>        
         <div class="row-fluid footertext"> 
           <center>
-            Site Design © 2012 thecodecookbook.com  <br/>         
+            Site Design © 2014 thecodecookbook.com  <br/>         
             Content under            
             <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">
               <!--img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /-->
@@ -180,7 +184,21 @@
       ga('create', 'UA-47319665-1', 'thecodecookbook.com');
       ga('send', 'pageview');
 
-    </script>    
+    </script>   
+    <!-- ClickTale Bottom part -->
+      <script type='text/javascript'>
+        // The ClickTale Balkan Tracking Code may be programmatically customized using hooks:
+        // 
+        //   function ClickTalePreRecordingHook() { /* place your customized code here */  }
+        //
+        // For details about ClickTale hooks, please consult the wiki page http://wiki.clicktale.com/Article/Customizing_code_version_2
+
+        document.write(unescape("%3Cscript%20src='"+
+        (document.location.protocol=='https:'?
+        "https://clicktalecdn.sslcs.cdngc.net/www02/ptc/20ad4f86-9616-435e-b29b-9e2fce31229e.js":
+        "http://cdn.clicktale.net/www02/ptc/20ad4f86-9616-435e-b29b-9e2fce31229e.js")+"'%20type='text/javascript'%3E%3C/script%3E"));
+      </script>
+    <!-- ClickTale end of Bottom part -->
   </body>
 </html>
 

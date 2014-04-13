@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :login_required, :only => [:new, :create, :drafts, :contributions, :user_search]
+  before_filter :authenticate_user!, :except => [:new, :create, :drafts, :contributions, :user_search]
 
   # GET /users/1/edit
   def edit

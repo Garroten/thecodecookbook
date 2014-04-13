@@ -1,7 +1,4 @@
 <script type="text/javascript">
-    //window.onload = function() {
-    //        new WMD("input", "toolbar", { preview: "preview" });
-    //};
     (function($) {
 	$(document).ready(function() {
 		$('#wysiwyg').wysiwyg({
@@ -19,8 +16,8 @@
 			indent  : { visible : true },
 			outdent : { visible : true },
 
-			subscript   : { visible : true },
-			superscript : { visible : true },
+			subscript   : { visible : false },
+			superscript : { visible : false },
 			
 			undo : { visible : true },
 			redo : { visible : true },
@@ -30,7 +27,7 @@
 			insertHorizontalRule : { visible : true },
 
 			h4: {
-				visible: true,
+				visible: false,
 				className: 'h4',
 				command: ($.browser.msie || $.browser.safari) ? 'formatBlock' : 'heading',
 				arguments: ($.browser.msie || $.browser.safari) ? '<h4>' : 'h4',
@@ -38,7 +35,7 @@
 				tooltip: 'Header 4'
 			},
 			h5: {
-				visible: true,
+				visible: false,
 				className: 'h5',
 				command: ($.browser.msie || $.browser.safari) ? 'formatBlock' : 'heading',
 				arguments: ($.browser.msie || $.browser.safari) ? '<h5>' : 'h5',
@@ -46,7 +43,7 @@
 				tooltip: 'Header 5'
 			},
 			h6: {
-				visible: true,
+				visible: false,
 				className: 'h6',
 				command: ($.browser.msie || $.browser.safari) ? 'formatBlock' : 'heading',
 				arguments: ($.browser.msie || $.browser.safari) ? '<h6>' : 'h6',
@@ -77,27 +74,8 @@
 			}
 		  }
 		});
-
-		//$('#wysiwyg').wysiwyg("insertHtml", "Sample code");
 	});
     })(jQuery);
-</script>
-<script type="text/javascript">
-    /*function preview() {
-      document.getElementById('input').style.display = 'none';
-      var previewcontent = document.getElementById('preview').textContent;
-      document.getElementById('preview2').innerHTML=previewcontent;
-      document.getElementById('preview2').style.display = 'block';
-      document.getElementById('deditlink').className = '';
-      document.getElementById('previewlink').className = 'active';
-    }
-    
-    function edit() {
-      document.getElementById('input').style.display = 'block';
-      document.getElementById('preview2').style.display = 'none';
-      document.getElementById('deditlink').className = 'active';
-      document.getElementById('previewlink').className = '';
-    }*/
 </script>
 
 <div class="span8 main">
@@ -105,7 +83,7 @@
       :html => {:multipart => true}  do |f| %>
     <div class="row">
       <div class="span8">
-        <%= f.text_field :title, :class => 'span8', :placeholder => 'No Title'%>
+        <%= f.text_field :title, :class => 'span8 titlepers', :placeholder => 'Click to edit title'%>
         <hr/> 
       </div>      
     </div>
@@ -121,51 +99,30 @@
                 <% end %>
 	      </ul>
 	    </div>
-	  <% end %>
-	  
-	  <!--div class="control-group">
-            <.%= f.label :title, :class=>"control-label" %>
-	    
-	  </div-->
+	  <% end %> 
+          <div class="row">
+            <div class="span7">
+              <i class="icon-tags"></i><%= f.text_field :tag_list, :class => 'span4', 'data-role'=>"tagsinput", :placeholder => 'Click to add Tags (write a tag and press enter)' %>          
+            </div>
+            <div class="span1 draft">
+              <%= f.check_box :is_draft %> draft
+            </div>
+          </div>
           
-          <div class="control-group">
-            <%= f.label :tag_list, "Tags" %> 
-	    <%= f.text_field :tag_list, :class => 'span8', 'data-role'=>"tagsinput" %>          
-	  </div>
-          
-	  <div class="control-group">
-            <!--div id="toolbar" class="wmd-toolbar span4"></div>
-            <div class="span3">
-              <ul class="nav nav-pills">
-                <li id="deditlink" class="active">
-                  <a href="#" onclick="edit()">edit</a>
-                </li>
-                <li id="previewlink">
-                  <a href="#" onclick="preview()">preview</a>
-                </li>
-              </ul>
-            </div-->
-            <!--%= f.text_area :marked_text, :id => "input", :class => "wmd-input recipe_input span8" %-->
+	  <div class="control-group">          
             <%= f.text_area :text, :id => "wysiwyg", :class => "span8" %>
-            <!--div class="row">
-              <div id="preview2" class="wmd-preview nodisplay preview span8"></div>
-            </div--> 
-	  </div>           	  
-          
+	  </div>           	            
 	  <!--div class="control-group">
             <.%= f.label :skill_list, "Skills" %>
 	    <.%= f.text_field :skill_list, :class => 'span8', 'data-role'=>"tagsinput" %>
 	  </div-->	
-	
-	  <div class="control-group">
-            <label class="checkbox">
-              <%= f.check_box :is_draft %> Is a draft?
-            </label>	    	    
-	  </div>
-          <div class="form-actions">
-            <div class="offset4">            
-              <a href="javascript: window.history. back()" class="btn btn-large"> Cancel </a>
-              <%= f.submit "Save Changes", :class => 'btn btn-large btn-success'%>
+          <hr>  
+          <div class="recipebtn">
+            <div class="span1">                 
+              <a href="javascript: window.history. back()" class="btn btn-large"> Cancel </a>            
+            </div>
+            <div class="span2">
+              <%= f.submit "Save Changes", :class => 'btn btn-large btn-primary'%>
             </div>
           </div>
         <% end %>        

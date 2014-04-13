@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  skip_before_filter :login_required, :only => [:index, :show]
+  before_filter :authenticate_user!, :except => [:show]
   before_filter :get_recipes_data
 
   def get_recipes_data
@@ -12,11 +12,15 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.xml
   def index
-    @recipes = Recipe.all
+    if current_user.try(:admin?)
+      @recipes = Recipe.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @recipes }
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @recipes }
+      end
+    else
+      redirect_to root_path
     end
   end    
 

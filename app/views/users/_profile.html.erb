@@ -8,19 +8,19 @@
         <li>     
           <%= link_to current_user do %>
               <i class="icon-book"></i>
-              My recipes (<%= @user.recipes.size %>)
+              My recipes <span class="badge"><%= @user.recipes.size %></span>
           <%end%>                  
         </li>
         <li>          
           <%= link_to :controller => "users", :action => "drafts", :id => @user.id do %>
             <i class="icon-pencil"></i>
-            Drafts (<%= @drafts.size %>)
+            Drafts <span class="badge"><%= @drafts.size %></span>
           <%end%>
         </li>
         <li>
           <%= link_to :controller => "users", :action => "contributions", :id => @user.id do %>
             <i class="icon-file"></i>
-            Contributions (<%= @user.contributions.size %>)
+            Contributions <span class="badge"><%= @user.contributions.size %></span>
           <%end%>
         </li>
         <li class="nav-header">

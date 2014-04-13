@@ -1,10 +1,4 @@
-require 'digest/sha1'
-
 class User < ActiveRecord::Base
-  include Authentication
-  include Authentication::ByPassword
-  include Authentication::ByCookieToken
-
   has_many :recipes 
   has_many :comments
   has_and_belongs_to_many :contributions, :join_table => :contributions, :class_name => 'Recipe', :association_foreign_key => 'recipe_id'  
@@ -14,50 +8,65 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>", :minithumb => "75x75" }
   
   set_table_name 'users'  
-
-  validates :login, :presence   => true,
-                    :uniqueness => true,
+  
+  validates :login, :uniqueness => true,
                     :length     => { :within => 3..40 },
                     :format     => { :with => Authentication.login_regex, :message => Authentication.bad_login_message }
 
-  validates :name,  :format     => { :with => Authentication.name_regex, :message => Authentication.bad_name_message },
-                    :length     => { :maximum => 100 },
-                    :allow_nil  => true
+  #validates :name,  :format     => { :with => Authentication.name_regex, :message => Authentication.bad_name_message },
+  #                  :length     => { :maximum => 100 },
+  #                  :allow_nil  => true
 
   validates :email, :presence   => true,
                     :uniqueness => true,
                     :format     => { :with => Authentication.email_regex, :message => Authentication.bad_email_message },
                     :length     => { :within => 6..100 }
+                  
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, :omniauth_providers => [:facebook]
 
-  
-
-  # HACK HACK HACK -- how to do attr_accessible from here?
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
+  # Setup accessible (or protected) attributes for your model
+  #attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :login, :email, :name, :password, :password_confirmation, :avatar, :avatar_file_name, :avatar_content_type, :avatar_file_size, :avatar_updated_at, :gener, :birth_date, :city, :country, :user_web_site, :twitter_profile, :facebook_profile, :linkedin_profile, :github_profile
-
-
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  #
-  # uff.  this is really an authorization, not authentication routine.  
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
-  def self.authenticate(login, password)
-    return nil if login.blank? || password.blank?
-    u = find_by_login(login.downcase) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
+  # attr_accessible :title, :body
+  
+  def self.find_for_facebook_oauth(auth)
+    where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.name = auth.info.name   # assuming the user model has a name
+      #user.image = auth.info.image # assuming the user model has an image
+      user.save!
+    end
   end
-
-  def login=(value)
-    write_attribute :login, (value ? value.downcase : nil)
+  
+  def self.find_for_facebook_oauth_username(auth, username)   
+    where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.email = username[:email]
+      user.password = username[:password]
+      user.name = auth.info.name   # assuming the user model has a name
+      #user.image = auth.info.image # assuming the user model has an image
+      user.login = username[:login]      
+      user.save                  
+    end
   end
-
-  def email=(value)
-    write_attribute :email, (value ? value.downcase : nil)
-  end 
-
+  
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
+  end
+  
   protected
 
   COUNTRIES = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra',
@@ -112,5 +121,4 @@ class User < ActiveRecord::Base
     'United States Minor Outlying Islands', 'Uruguay', 'Uzbekistan', 'Vanuatu',
     'Venezuela', 'Viet Nam', 'Virgin Islands, British', 'Virgin Islands, U.S.',
     'Wallis and Futuna', 'Western Sahara', 'Yemen', 'Zambia', 'Zimbabwe']
-
 end

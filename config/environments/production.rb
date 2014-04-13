@@ -48,4 +48,6 @@ Thecodecookbook::Application.configure do
   config.active_support.deprecation = :notify
   # Root to ImageMagilc for paperclip
   Paperclip.options[:command_path] = "/usr/local/bin/"
+  
+  
 end
